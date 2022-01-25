@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+
+        // put 방식
+
+        const memberUpdate = () => {
+            console.log('수정 함수 호출')
+            const id = document.getElementById("memberId").value
+            const email = document.querySelector("#memberEmail").value
+            const password = $("#memberPassword").val()
+            const name = $("#memberName").val()
+            console.log(id,email,password,name);
+            const updateData = JSON.stringify({
+                memberId: id,
+                memberEmail: email,
+                memberPassword: password,
+                memberName: name
+            });
+            const reqUrl = "/member/"+id;
+            console.log(updateData);
+            $.ajax({
+                type: "put",
+                data: updateData,
+                url: reqUrl,
+                contentType: "application/json",
+                success: function () {
+                    location.href = "/member/"+id;
+                },
+                error: function () {
+                    alert("ajax 실패")
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<h2>update.html</h2>
+<form action="/member/update" method="post">
+    <input type="hidden" name="memberId" id="memberId" th:value="${member.memberId}"><br>
+    <input type="text" name="memberEmail" id="memberEmail" th:value="${member.memberEmail}" placeholder="이메일" readonly><br>
+    <input type="text" name="memberPassword" id="memberPassword" th:value="${member.memberPassword}" placeholder="비밀번호"><br>
+    <input type="text" name="memberName" id="memberName" th:value="${member.memberName}" placeholder="이름"><br>
+    <input type="button" value="수정(put방식)" th:onclick="memberUpdate()">
+</form>
+</body>
+</html>

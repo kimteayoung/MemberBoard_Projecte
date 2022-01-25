@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>index.html</h2>
+<a href="/member/save">회원가입</a><br>
+<a href="/member/login">로그인</a><br>
+<a href="/member/">회원목록</a><br>
+<a href="/board/save">글쓰기</a><br>
+<a href="/board/">글목록</a><br>
+<a href="/board">페이징 목록</a><br>
+<a href="logout">로그아웃</a><br>
+
+세션:<p th:text="${session['LoginEmail']}"></p>
+
+</body>
+</html>
