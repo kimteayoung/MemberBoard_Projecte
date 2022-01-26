@@ -53,5 +53,79 @@
 </table>
 <a th:href="@{|/board/update/${board.boardId}|}">수정</a>
 <button th:onclick="deleteById([[${board.boardId}]])">삭제</button>
+
+<div id="comment-write"></div>
+<input type="text" id="commentWriter" placeholder="작성자">
+<input type="text" id="commentContents" placeholder="내용">
+<button id="comment-write-btn">댓글등록</button>
+
+<div id="comment-area">
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>비밀번호</th>
+            <th>작성일자</th>
+            <th>내용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment: ${commentList}">
+            <td th:text="${comment.memberId}"></td>
+            <td th:text="${comment.memberEmail}"></td>
+            <td th:text="${comment.memberPassword}"></td>
+            <td th:text="${comment.memberName}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+<script>
+    $("#comment-write-btn").click(function (){
+        console.log('댓글등록 버튼 클릭');
+        const commentWriter = $("#commentWriter").val();
+        const commentContents = $("#commentContents").val();
+        const boardId = '[[${board.boardId}]]';
+        $.ajax({
+            type: 'post',
+            url: '/comment/save',
+            data: {
+                'commentWriter': commentWriter,
+                'commentContents': commentContents,
+                'boardId': boardId
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                let output = "";
+                output += "<table>\n" +
+                    "    <thead>\n" +
+                    "        <tr>\n" +
+                    "            <th>댓글번호</th>\n" +
+                    "            <th>작성자</th>\n" +
+                    "            <th>내용</th>\n" +
+                    "            <th>작성시간</th>\n" +
+                    "        </tr>\n" +
+                    "    </thead>\n" +
+                    "    <tbody>\n" +
+                    "        <tr>\n" +
+                    "            <td>" + result.boardId + "</td>\n" +
+                    "            <td>" + result.commentWriter + "</td>\n" +
+                    "            <td>" + result.commentContents + "</td>\n" +
+                    "        </tr>\n" +
+                    "    </tbody>\n" +
+                    "</table>";
+                document.getElementById("comment-view").innerHTML = output;
+            },
+            error: function () {
+                alert('ajax 실패');
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -82,7 +82,7 @@
             <th>이름</th>
             <th>조회</th>
             <th>조회(ajax)</th>
-            <th>삭제</th>
+            <th>삭제(ajax)</th>
         </tr>
     </thead>
     <tbody>
@@ -93,7 +93,7 @@
             <td th:text="${member.memberName}">이름</td>
             <td><a th:href="@{|/member/${member.memberId}|}">조회</a></td>
             <td><button th:onclick="detail([[${member.memberId}]])">조회(ajax)</button></td>
-            <td><button th:onclick="deleteById([[${member.memberId}]])">삭제</button></td>
+            <td><button th:onclick="deleteById([[${member.memberId}]])">삭제(ajax)</button></td>
             <td></td>
         </tr>
     </tbody>

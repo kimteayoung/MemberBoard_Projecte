@@ -24,10 +24,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
     private final BoardRepository br;
+    private final MemberRepository mr;
 
     @Override
     public Long save(BoardSaveDTO boardSaveDTO) {
-        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardSaveDTO);
+        MemberEntity memberEntity = mr.findByMemberEmail(boardSaveDTO.getBoardWriter());
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardSaveDTO, memberEntity);
         Long boardId = br.save(boardEntity).getId();
         return boardId;
     }

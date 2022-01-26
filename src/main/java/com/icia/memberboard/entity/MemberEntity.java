@@ -28,6 +28,13 @@ public class MemberEntity {
     @Column
     private String memberName;
 
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.LAZY)
+    private List<BoardEntity> boardEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+
     public static MemberEntity saveMember(MemberSaveDTO memberSaveDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setMemberEmail(memberSaveDTO.getMemberEmail());
@@ -43,5 +50,12 @@ public class MemberEntity {
         memberEntity.setMemberPassword(memberDetailDTO.getMemberPassword());
         memberEntity.setMemberName(memberDetailDTO.getMemberName());
         return memberEntity;
+    }
+
+    @PreRemove
+    private void preRemove() {
+        System.out.println("MemberEntity.preRemove");
+        boardEntityList.forEach(board -> board.setMemberEntity(null));
+        commentEntityList.forEach(comment -> comment.setMemberEntity(null));
     }
 }
