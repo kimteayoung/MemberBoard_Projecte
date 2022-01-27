@@ -4,15 +4,51 @@
     <meta charset="UTF-8">
     <title>$Title$</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+        input{
+            display: block
+        }
+    </style>
+    <script>
 
+        function idDuplicate(){
+            const LoginEmail = document.getElementById('LoginEmail').value;
+            console.log(LoginEmail);
+            const checkResult = document.getElementById('id-dup-check');
+
+            $.ajax({
+                type: 'post',
+                url: 'idDuplicate',
+                data: {'LoginEmail': LoginEmail},
+                dataType: 'text',
+                success: function(result){
+                    console.log('ajax 성공');
+                    console.log(result);
+                    if(result=="ok"){
+                        checkResult.style.color = 'green';
+                        checkResult.innerHTML = '멋진아이디네요!!'
+                    }else if (result=="no"){
+                        checkResult.style.color = 'red';
+                        checkResult.innerHTML = '이미 사용중인 아이디입니다.'
+                    }
+                },
+                error: function(){// 요청이 실패했을 때 실행할 함수
+                    console.log('오타를 찾으세요');
+
+
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <h2>save.html</h2>
 <form action="/member/save" method="post">
-    <input type="text" name="memberEmail" placeholder="이메일"><br>
-    <input type="text" name="memberPassword" placeholder="비밀번호"><br>
-    <input type="text" name="memberName" placeholder="이름"><br>
-    <input type="submit" value="회원가입" ><br>
+    <input type="text" name="memberEmail" placeholder="이메일" onblur= "idDuplicate()" id="LoginEmail">
+    <span id="id-dup-check"></span>
+    <input type="text" name="memberPassword" placeholder="비밀번호">
+    <input type="text" name="memberName" placeholder="이름">
+    <input type="submit" value="회원가입" >
 </form>
 </body>
 </html>

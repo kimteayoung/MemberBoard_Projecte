@@ -57,18 +57,18 @@ public class BoardController {
         return "board/findById";
     }
 
+    // 글 상세 조회 (ajax)
+    @PostMapping("/{boardId}")
+    public ResponseEntity findById2(@PathVariable Long boardId) {
+        BoardDetailDTO board = bs.findById(boardId);
+        return new ResponseEntity<BoardDetailDTO>(board, HttpStatus.OK);
+    }
+
     // 글삭제(/board/숫자) ajax 활용
     @DeleteMapping("/{boardId}")
     public ResponseEntity deleteById2(@PathVariable Long boardId) {
         bs.deleteById(boardId);
         return  new ResponseEntity(HttpStatus.OK);
-    }
-
-    // 글 상세 조회
-    @PostMapping("/{boardId}")
-    public ResponseEntity findById2(@PathVariable Long boardId) {
-        BoardDetailDTO board = bs.findById(boardId);
-        return new ResponseEntity<BoardDetailDTO>(board, HttpStatus.OK);
     }
 
     // 글 수정 화면 요청

@@ -20,4 +20,6 @@ public interface MemberService {
     MemberDetailDTO findByEmail(String memberEmail);
 
     Long update(MemberDetailDTO memberDetailDTO);
+
+    String idDuplicate(String loginEmail);
 }

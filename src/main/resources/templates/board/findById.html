@@ -65,18 +65,16 @@
         <tr>
             <th>번호</th>
             <th>작성자</th>
-            <th>제목</th>
-            <th>비밀번호</th>
-            <th>작성일자</th>
             <th>내용</th>
+            <th>작성일자</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="comment: ${commentList}">
-            <td th:text="${comment.memberId}"></td>
-            <td th:text="${comment.memberEmail}"></td>
-            <td th:text="${comment.memberPassword}"></td>
-            <td th:text="${comment.memberName}"></td>
+            <td th:text="${comment.commentId}"></td>
+            <td th:text="${comment.commentWriter}"</td>
+            <td th:text="${comment.commentContents}"></td>
+            <td th:text="${comment.createTime}"></td>
         </tr>
         </tbody>
     </table>
@@ -96,30 +94,25 @@
                 'commentWriter': commentWriter,
                 'commentContents': commentContents,
                 'boardId': boardId
-
             },
             dataType: 'json',
-            success: function (result) {
-                console.log(result);
-                let output = "";
-                output += "<table>\n" +
-                    "    <thead>\n" +
-                    "        <tr>\n" +
-                    "            <th>댓글번호</th>\n" +
-                    "            <th>작성자</th>\n" +
-                    "            <th>내용</th>\n" +
-                    "            <th>작성시간</th>\n" +
-                    "        </tr>\n" +
-                    "    </thead>\n" +
-                    "    <tbody>\n" +
-                    "        <tr>\n" +
-                    "            <td>" + result.boardId + "</td>\n" +
-                    "            <td>" + result.commentWriter + "</td>\n" +
-                    "            <td>" + result.commentContents + "</td>\n" +
-                    "        </tr>\n" +
-                    "    </tbody>\n" +
-                    "</table>";
-                document.getElementById("comment-view").innerHTML = output;
+            success: function (result){
+                let output = "<table>";
+                output += "<tr><th>댓글번호</th>";
+                output += "<th>작성자</th>";
+                output += "<th>내용</th>";
+                output += "<th>작성시간</th></tr>";
+                for ( let i in result) {
+                    output += "<tr>";
+                    output += "<td>" + result[i].commentId + "</td>";
+                    output += "<td>" + result[i].commentWriter + "</td>";
+                    output += "<td>" + result[i].commentContents + "</td>";
+                    output += "<td>" + result[i].createTime + "</td>";
+                    output += "</tr>";
+                }
+                output += "</table>";
+                document.getElementById('comment-area').innerHTML = output;
+                document.getElementById('commentContents').value = '';
             },
             error: function () {
                 alert('ajax 실패');
@@ -127,5 +120,5 @@
         });
     });
 </script>
-</body>
+
 </html>

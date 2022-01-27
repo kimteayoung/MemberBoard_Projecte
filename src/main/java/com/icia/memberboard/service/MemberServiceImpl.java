@@ -72,5 +72,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
 
+    @Override
+    public String idDuplicate(String LoginEmail) {
+        MemberEntity memberEntity = mr.findByMemberEmail(LoginEmail);
+        if(memberEntity == null) {
+            return "ok";
+        }else
+            return "no";
+    }
+
 
 }

@@ -112,4 +112,11 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // 아이디 중복체크 1
+    @PostMapping("idDuplicate")
+    public @ResponseBody String  idDuplicate(@RequestParam ("LoginEmail") String LoginEmail) {
+        String result = ms.idDuplicate(LoginEmail);
+        return result; // "ok" or "no"
+    }
+
 }
