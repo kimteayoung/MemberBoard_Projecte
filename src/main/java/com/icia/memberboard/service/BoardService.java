@@ -21,4 +21,7 @@ public interface BoardService {
     void deleteById(Long boardId);
 
     Page<BoardPagingDTO> paging(Pageable pageable);
+
+
+    List<BoardDetailDTO> search(String searchType, String keyword);
 }

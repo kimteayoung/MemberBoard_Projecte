@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
+import static com.icia.memberboard.common.PagingConst.BLOCK_LIMIT;
 
 @Controller
 @RequestMapping("/board")
@@ -100,8 +103,8 @@ public class BoardController {
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<BoardPagingDTO> boardList = bs.paging(pageable);
         model.addAttribute("boardList", boardList);
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < boardList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : boardList.getTotalPages();
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / BLOCK_LIMIT))) - 1) * BLOCK_LIMIT + 1;
+        int endPage = ((startPage + BLOCK_LIMIT - 1) < boardList.getTotalPages()) ? startPage + BLOCK_LIMIT - 1 : boardList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         return "board/paging";
@@ -113,5 +116,14 @@ public class BoardController {
         session.invalidate();
         return "index";
     }
+
+    // 게시글 검색
+    @GetMapping("search")
+    public String search(@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword, Model model) {
+        List<BoardDetailDTO>boardList = bs.search(searchType,keyword );
+        model.addAttribute("boardList",boardList);
+        return "board/findAll";
+    }
+
 
 }

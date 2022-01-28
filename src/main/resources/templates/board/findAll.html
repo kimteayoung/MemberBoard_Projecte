@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
     <script>
         const detail = (boardId) => {
             console.log(boardId);
@@ -46,6 +47,16 @@
 </head>
 <body>
 <h2>findAll.html</h2>
+
+<form action="/board/search" method="get">
+    <select name="searchType">
+        <option value="boardTitle">제목</option>
+        <option value="boardWriter">작성자</option>
+    </select>
+    <input type="text" name="keyword" placeholder="검색어..">
+    <input type="submit" value="검색">
+</form>
+
 <table>
     <thead>
     <tr>

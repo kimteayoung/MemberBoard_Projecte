@@ -16,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -78,4 +76,34 @@ public class BoardServiceImpl implements BoardService{
         );
         return boardList;
     }
+
+    // 검색
+
+    @Override
+    public List<BoardDetailDTO> search(String searchType, String keyword) {
+
+        List<BoardEntity> boardEntity = null;
+
+        if (searchType.equals("boardTitle")){
+            System.out.println("title");
+            boardEntity = br.findByBoardTitleContaining(keyword);
+        }else if (searchType.equals("boardWriter")){
+            System.out.println("writer");
+            boardEntity = br.findByBoardWriterContaining(keyword);
+        }else {
+            System.out.println("contents");
+            boardEntity = br.findByBoardContentsContaining(keyword);
+            System.out.println("addafa"+boardEntity);
+        }
+
+        List<BoardDetailDTO> boardDetailDTOSList = new ArrayList<>();
+        for (BoardEntity b:boardEntity){
+            boardDetailDTOSList.add(BoardDetailDTO.toBoardDetailDTO(b));
+        }
+        return boardDetailDTOSList;
+
+
+
+    }
+
 }
