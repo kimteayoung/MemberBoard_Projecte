@@ -17,6 +17,7 @@ public class BoardDetailDTO {
     private String boardTitle;
     private String boardContents;
     private LocalDateTime boardDate;
+    private int boardHits;
 
     public static BoardDetailDTO toBoardDetailDTO(BoardEntity boardEntity) {
         BoardDetailDTO boardDetailDTO = new BoardDetailDTO();
@@ -26,6 +27,7 @@ public class BoardDetailDTO {
         boardDetailDTO.setBoardTitle(boardEntity.getBoardTitle());
         boardDetailDTO.setBoardContents(boardEntity.getBoardContents());
         boardDetailDTO.setBoardDate(boardEntity.getCreateTime());
+        boardDetailDTO.setBoardHits(boardEntity.getBoardHits()); //
         return boardDetailDTO;
     }
 }

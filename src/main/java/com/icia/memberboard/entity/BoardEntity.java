@@ -33,6 +33,12 @@ public class BoardEntity extends BaseEntity{
     @Column
     private String boardContents;
 
+    @Column
+    private int boardHits;
+
+    @Column
+    private String boardFileName;
+
 //    @Column(updatable = false)
 //    private LocalDateTime boardDate;
 
@@ -45,11 +51,12 @@ public class BoardEntity extends BaseEntity{
 
     public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBoardWriter(memberEntity.getMemberEmail());
+        boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
         boardEntity.setBoardPassword(boardSaveDTO.getBoardPassword());
         boardEntity.setBoardTitle(boardSaveDTO.getBoardTitle());
         boardEntity.setBoardContents(boardSaveDTO.getBoardContents());
         boardEntity.setMemberEntity(memberEntity);
+        boardEntity.setBoardFileName(boardSaveDTO.getBoardFileName());
 //        boardEntity.setBoardDate(LocalDateTime.now());
         return boardEntity;
     }

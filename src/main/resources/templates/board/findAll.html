@@ -65,6 +65,7 @@
         <th>작성자</th>
         <th>작성일자</th>
         <th>상세조회(ajax)</th>
+        <th>조회수</th>
     </tr>
     </thead>
     <tbody>
@@ -78,6 +79,7 @@
         <td th:text="${board.boardWriter}"></td>
         <td th:text="${board.boardDate}"></td>
         <td><button th:onclick="detail([[${board.boardId}]])">상세조회(ajax)</button></td>
+        <td th:text="${board.boardHits}"></td>
 
     </tr>
     </tbody>

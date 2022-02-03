@@ -7,10 +7,11 @@ import com.icia.memberboard.DTO.BoardUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
-    Long save(BoardSaveDTO boardSaveDTO);
+    Long save(BoardSaveDTO boardSaveDTO) throws IOException;
 
     List<BoardDetailDTO> findAll();
 
@@ -22,6 +23,7 @@ public interface BoardService {
 
     Page<BoardPagingDTO> paging(Pageable pageable);
 
-
     List<BoardDetailDTO> search(String searchType, String keyword);
+
+    void hits(Long boardId);
 }

@@ -1,11 +1,9 @@
 package com.icia.memberboard.controller;
 
-import com.icia.memberboard.DTO.BoardDetailDTO;
-import com.icia.memberboard.DTO.BoardPagingDTO;
-import com.icia.memberboard.DTO.BoardSaveDTO;
-import com.icia.memberboard.DTO.BoardUpdateDTO;
+import com.icia.memberboard.DTO.*;
 import com.icia.memberboard.common.PagingConst;
 import com.icia.memberboard.service.BoardService;
+import com.icia.memberboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 import static com.icia.memberboard.common.PagingConst.BLOCK_LIMIT;
@@ -29,6 +28,7 @@ import static com.icia.memberboard.common.PagingConst.BLOCK_LIMIT;
 @Slf4j
 public class BoardController {
     private final BoardService bs;
+    private final CommentService cs;
 
     // 글쓰기 화면요청
     @GetMapping("/save")
@@ -38,7 +38,8 @@ public class BoardController {
 
     // 글쓰기 처리
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardSaveDTO boardSaveDTO){
+    public String save(@ModelAttribute BoardSaveDTO boardSaveDTO) throws IOException {
+        System.out.println("boardSaveDTO = " + boardSaveDTO);
         Long boardId = bs.save(boardSaveDTO);
         return "index";
     }
@@ -54,10 +55,13 @@ public class BoardController {
 
     // 글목록 조회
     @GetMapping("/{boardId}")
-    public String findById(Model model, @PathVariable Long boardId) {
+    public String findById(Model model, @PathVariable("boardId") Long boardId ) {
         log.info("글보기 메서드 호출. 요청글 번호: {}", boardId);
+        bs.hits(boardId);
         BoardDetailDTO board = bs.findById(boardId);
+        List<CommentDetailDTO> commentList = cs.findAll(boardId);
         model.addAttribute("board", board);
+        model.addAttribute("commentList", commentList);
         return "board/findById";
     }
 
@@ -124,6 +128,5 @@ public class BoardController {
         model.addAttribute("boardList",boardList);
         return "board/findAll";
     }
-
 
 }

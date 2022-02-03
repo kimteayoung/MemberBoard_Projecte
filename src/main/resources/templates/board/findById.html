@@ -37,6 +37,7 @@
         <th>비밀번호</th>
         <th>작성일자</th>
         <th>내용</th>
+        <th>조회수</th>
 
     </tr>
     </thead>
@@ -48,6 +49,7 @@
         <td th:text="${board.boardPassword}"></td>
         <td th:text="${board.boardDate}"></td>
         <td th:text="${board.boardContents}"></td>
+        <td th:text="${board.boardHits}"></td>
     </tr>
     </tbody>
 </table>
@@ -55,7 +57,7 @@
 <button th:onclick="deleteById([[${board.boardId}]])">삭제</button>
 
 <div id="comment-write"></div>
-<input type="text" id="commentWriter" placeholder="작성자">
+<input type="text" id="commentWriter" th:value="${session['LoginEmail']}">
 <input type="text" id="commentContents" placeholder="내용">
 <button id="comment-write-btn">댓글등록</button>
 
