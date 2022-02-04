@@ -28,6 +28,7 @@
 <body>
 <h2>findById.html</h2>
 <a href="/">홈</a>
+<p><img src="/resources/upload/1638770178085-신모래.jpg"><p>
 <table>
     <thead>
     <tr>
@@ -38,6 +39,8 @@
         <th>작성일자</th>
         <th>내용</th>
         <th>조회수</th>
+        <th>이미지</th>
+        <th>이미지</th>
 
     </tr>
     </thead>
@@ -50,6 +53,10 @@
         <td th:text="${board.boardDate}"></td>
         <td th:text="${board.boardContents}"></td>
         <td th:text="${board.boardHits}"></td>
+        <td th:text="${board.boardFileName}"></td>
+
+        <td><img alt="" th:src="@{|/upload/${board.boardFileName}|}"></td>
+
     </tr>
     </tbody>
 </table>
