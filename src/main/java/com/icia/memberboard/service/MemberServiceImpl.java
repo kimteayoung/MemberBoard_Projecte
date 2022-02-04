@@ -80,6 +80,17 @@ public class MemberServiceImpl implements MemberService{
         }else
             return "no";
     }
-
+//
+//    @Override
+//    public List<MemberDetailDTO> admin() {
+//        List<MemberDetailDTO> memberList = mr.admin();
+//        return memberList;
+//    }
+//
+//    @Override
+//    public MemberDetailDTO myPage(String LoginEmail) {
+//        MemberDetailDTO m = mr.myPage(LoginEmail);
+//        return m;
+//    }
 
 }

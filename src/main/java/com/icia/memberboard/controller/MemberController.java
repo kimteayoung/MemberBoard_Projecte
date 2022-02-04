@@ -3,15 +3,12 @@ package com.icia.memberboard.controller;
 import com.icia.memberboard.DTO.MemberDetailDTO;
 import com.icia.memberboard.DTO.MemberLoginDTO;
 import com.icia.memberboard.DTO.MemberSaveDTO;
-import com.icia.memberboard.entity.MemberEntity;
 import com.icia.memberboard.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -118,5 +115,21 @@ public class MemberController {
         String result = ms.idDuplicate(LoginEmail);
         return result; // "ok" or "no"
     }
+//
+//    //관리자 페이지 출력
+//    @GetMapping("admin")
+//    public String admin (Model model) {
+//        List<MemberDetailDTO> memberList = ms.admin();
+//        model.addAttribute("memberList", memberList);
+//        return "member/admin";
+//    }
+//
+//    // 마이페이지 출력
+//    @GetMapping("myPage")
+//    public String myPage (@RequestParam ("LoginEmail") String LoginEmail, Model model){
+//        MemberDetailDTO m = ms.myPage(LoginEmail);
+//        model.addAttribute("myPage", m);
+//        return "member/myPage";
+//    }
 
 }

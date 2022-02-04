@@ -22,4 +22,8 @@ public interface MemberService {
     Long update(MemberDetailDTO memberDetailDTO);
 
     String idDuplicate(String loginEmail);
+
+//    List<MemberDetailDTO> admin();
+//
+//    MemberDetailDTO myPage(String loginEmail);
 }
